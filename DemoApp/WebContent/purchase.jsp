@@ -14,6 +14,10 @@
 <div id="outer">
 	<nav class="navbar navbar-expand-md navbar-dark bg-info">
     <a href="#" style="text-decoration:none;"" class="navbar-brand">TOMATTO BILLING SYSTEM</a>
+    <div class="navbar-nav">
+            <a href="#" class="nav-item nav-link active mr-5">HII <% out.println(session.getAttribute("username")); %></a>
+            <a href="profile.jsp" class="nav-item nav-link active mr-5">PROFILE</a>
+            </div>
     <div class="form-inline ml-auto">
             
             <a href="logout.jsp"><button type="submit" class="btn btn-danger">Logout</button></a>
@@ -42,11 +46,12 @@ if(session.getAttribute("username")==null)
 
 try 
 {
+	String  user=(String)session.getAttribute("username");
 	int lable_no=0;
 	Class.forName("org.postgresql.Driver");
 	Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/market", "postgres", "rizz");
 	Statement st = conn.createStatement();
-	ResultSet rs=st.executeQuery("SELECT lable_no FROM purchase");
+	ResultSet rs=st.executeQuery("SELECT lable_no FROM purchase where cust='"+user+"'");
 	while(rs.next())
 		lable_no=rs.getInt("lable_no");
 	lable_no=lable_no+1;

@@ -14,6 +14,10 @@
 <div id="outer">
 	<nav class="navbar navbar-expand-md navbar-dark bg-info">
     <a href="#" style="text-decoration:none;"" class="navbar-brand">TOMATTO BILLING SYSTEM</a>
+    <div class="navbar-nav">
+            <a href="#" class="nav-item nav-link active mr-5">HII <% out.println(session.getAttribute("username")); %></a>
+            <a href="profile.jsp" class="nav-item nav-link active mr-5">PROFILE</a>
+            </div>
     <div class="form-inline ml-auto">
             
             <a href="logout.jsp"><button type="submit" class="btn btn-danger">Logout</button></a>
@@ -46,10 +50,9 @@ if(session.getAttribute("username")==null)
 {
 	response.sendRedirect("login.jsp");
 }
-%>			
-<%
 try
 {
+	String  user=(String)session.getAttribute("username");
 	String url="jdbc:postgresql://localhost:5432/market";
 	String username="postgres";
 	String pass="rizz";
@@ -60,7 +63,7 @@ try
 	Statement st= conn.createStatement();
 	String date=request.getParameter("date");
 	String date1=request.getParameter("date1");
-	rs=st.executeQuery("select * from sale where date between '"+date+"'and '"+date1+"' " );
+	rs=st.executeQuery("select * from sale where date between '"+date+"'and '"+date1+"' and cust='"+user+"' " );
     out.println("<table border=10>");
     out.println("<tr> ");
     out.println("<td>BILL NUMBER</td>");
@@ -89,7 +92,7 @@ try
 		out.println("<td>"+rs.getInt(8)+"</td>");
 		out.println("<td>"+rs.getInt(9)+"</td>");
 		out.println("<td>"+rs.getString(10)+"</td>");
-		out.println("<td>"+rs.getString(11)+"</td>");
+		out.println("<td>"+rs.getString(12)+"</td>");
 		out.println("</tr>");
 	}
 	out.println("</table>");

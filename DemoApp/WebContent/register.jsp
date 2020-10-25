@@ -12,10 +12,6 @@
 <div id="outer">
 	<nav class="navbar navbar-expand-md navbar-dark bg-info">
     <a href="#" style="text-decoration:none;"" class="navbar-brand">TOMATTO BILLING SYSTEM</a>
-    <div class="form-inline ml-auto">
-            
-            <a href="logout.jsp"><button type="submit" class="btn btn-danger">Logout</button></a>
-        </div>
     
 </nav>
 <div id="banner">
@@ -24,7 +20,14 @@
 			
 			</div>
 <div id="box">
-
+<% 
+				if(request.getAttribute("Error")!=null)
+				{
+				out.print("<font size='4' color='red' m>");
+				out.print(request.getAttribute("Error"));
+				out.print("</font>");
+				}
+%>
 <form method="post" action="Register" class="mt-4">
 					<table>
 					<tr><td style="color:navy;"><B>	FILL THE INFO</B></td></tr>
@@ -33,12 +36,13 @@
 					<tr><td>ENTER ADDRESS::</td><td><input type="text" name="address"></td></tr>
 					<tr><td>ENTER USERNAME::</td><td><input type="text" name="uname"></td></tr>
 					<tr><td>ENTER PASSWORD::</td><td><input type="text" name="pass"></td></tr>
+					<tr><td>MAIL ID::</td><td><input type="email" name="mail"></td></tr>
+					<tr><td>CONTACT::</td><td><input type="text" name="contact"></td></tr>
 					<tr><td></td><td><input type="submit" name="sign up" value="SIGN UP" class="btn btn-success mb-4"></td></tr>
 					</table>
 					</form>		
 
 </div>
-
 </div>
 </body>
 <div>

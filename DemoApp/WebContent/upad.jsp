@@ -14,6 +14,10 @@
 <div id="outer">
 	<nav class="navbar navbar-expand-md navbar-dark bg-info">
     <a href="#" style="text-decoration:none;"" class="navbar-brand">TOMATTO BILLING SYSTEM</a>
+    <div class="navbar-nav">
+            <a href="#" class="nav-item nav-link active mr-5">HII <% out.println(session.getAttribute("username")); %></a>
+            <a href="profile.jsp" class="nav-item nav-link active mr-5">PROFILE</a>
+            </div>
     <div class="form-inline ml-auto">
             
             <a href="logout.jsp"><button type="submit" class="btn btn-danger">Logout</button></a>
@@ -48,6 +52,7 @@ if(session.getAttribute("username")==null)
 }
 try
 {
+	String  user=(String)session.getAttribute("username");
 	String url="jdbc:postgresql://localhost:5432/market";
 	String username="postgres";
 	String pass="rizz";
@@ -56,7 +61,7 @@ try
 	Class.forName("org.postgresql.Driver");
 	Connection conn=DriverManager.getConnection(url,username,pass);
 	Statement st= conn.createStatement();
-	rs=st.executeQuery("select lable_no,grand_total,payment,date  from purchase where payment='unpaid'");
+	rs=st.executeQuery("select lable_no,grand_total,payment,date  from purchase where payment='unpaid' and cust='"+user+"' ");
     out.println("<table border=10>");
     out.println("<tr> ");
     out.println("<td>LABLE NUMBER</td>");

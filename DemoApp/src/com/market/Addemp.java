@@ -19,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 @WebServlet("/Addemp")
@@ -38,6 +39,8 @@ public class Addemp extends HttpServlet {
 		String message;
 		try
 		{
+			HttpSession session= request.getSession(false);
+			String  user=(String)session.getAttribute("username");
 		String url="jdbc:postgresql://localhost:5432/market";
 		String username="postgres";
 		String pass="rizz";
@@ -46,11 +49,12 @@ public class Addemp extends HttpServlet {
 		Class.forName("org.postgresql.Driver");
 		Connection conn=DriverManager.getConnection(url,username,pass);
 		Statement st= conn.createStatement();
-		ps1=conn.prepareStatement("insert into employee values(?,?,?,?)");
+		ps1=conn.prepareStatement("insert into employee values(?,?,?,?,?)");
 		ps1.setInt(1,eid);
 		ps1.setString(2,name);
 		ps1.setString(3,desg);
 		ps1.setString(4,sal);
+		ps1.setString(5,user);
 		ps1.executeLargeUpdate();
 		conn.close();
 		message= "EMPLOYEE DATA SUCCESSFULLY ADDED, YOU CAN CHECK IN TABLES";

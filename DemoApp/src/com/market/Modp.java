@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 @WebServlet("/Modp")
@@ -23,6 +24,9 @@ public class Modp extends HttpServlet {
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+
+			HttpSession session= request.getSession(false);
+			String  user=(String)session.getAttribute("username");
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		int l=Integer.parseInt(request.getParameter("bill"));
@@ -38,7 +42,7 @@ public class Modp extends HttpServlet {
 		Class.forName("org.postgresql.Driver");
 		Connection conn=DriverManager.getConnection(url,username,pass);
 		Statement st= conn.createStatement();
-		ps1=conn.prepareStatement("update sale set payment = '"+n+"' where bill_no = "+l+" ");
+		ps1=conn.prepareStatement("update sale set payment = '"+n+"' where bill_no = "+l+" and cust='"+user+"' ");
 		ps1.executeUpdate();
 		conn.close();
 		message= "UPDATE SUCCESSFULL YOU CAN CHECK IN TABLES";

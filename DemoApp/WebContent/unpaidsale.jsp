@@ -14,6 +14,10 @@
 <div id="outer">
 	<nav class="navbar navbar-expand-md navbar-dark bg-info">
     <a href="#" style="text-decoration:none;"" class="navbar-brand">TOMATTO BILLING SYSTEM</a>
+    <div class="navbar-nav">
+            <a href="#" class="nav-item nav-link active mr-5">HII <% out.println(session.getAttribute("username")); %></a>
+            <a href="profile.jsp" class="nav-item nav-link active mr-5">PROFILE</a>
+            </div>
     <div class="form-inline ml-auto">
             
             <a href="logout.jsp"><button type="submit" class="btn btn-danger">Logout</button></a>
@@ -46,10 +50,10 @@ if(session.getAttribute("username")==null)
 {
 	response.sendRedirect("login.jsp");
 }
-%>			
-<%
 try
 {
+
+String  user=(String)session.getAttribute("username");
 	String url="jdbc:postgresql://localhost:5432/market";
 	String username="postgres";
 	String pass="rizz";
@@ -58,7 +62,7 @@ try
 	Class.forName("org.postgresql.Driver");
 	Connection conn=DriverManager.getConnection(url,username,pass);
 	Statement st= conn.createStatement();
-	rs=st.executeQuery("select * from sale where payment='unpaid' ");
+	rs=st.executeQuery("select * from sale where payment='unpaid' and cust='"+user+"' ");
     out.println("<table border=10>");
     out.println("<tr> ");
     out.println("<td>BILL NUMBER</td>");
@@ -67,8 +71,9 @@ try
     out.println("<td>CARRET TYPE</td>");
     out.println("<td>SALE RATE </td>");
     out.println("<td>TOTAL CARRET </td>");
-    out.println("<td> AMMOUNT</td>");
+    out.println("<td>TOTAL AMMOUNT</td>");
     out.println("<td>ADVANCE</td>");
+    out.println("<td> AMMOUNT</td>");
     out.println("<td>PAYMENT </td>");
     out.println("<td>DATE </td>");
     out.println("</tr>");
@@ -84,8 +89,9 @@ try
 		out.println("<td>"+rs.getInt(6)+"</td>");
 		out.println("<td>"+rs.getInt(7)+"</td>");
 		out.println("<td>"+rs.getInt(8)+"</td>");
-		out.println("<td>"+rs.getString(9)+"</td>");
+		out.println("<td>"+rs.getInt(9)+"</td>");
 		out.println("<td>"+rs.getString(10)+"</td>");
+		out.println("<td>"+rs.getString(12)+"</td>");
 		out.println("</tr>");
 	}
 	out.println("</table>");

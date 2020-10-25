@@ -27,17 +27,15 @@ if(session.getAttribute("username")==null)
 			
 			</div>
 	<nav class="navbar navbar-expand-md navbar-dark bg-info">
-    <a href="#" style="text-decoration:none;"" class="text-danger">DO YOU WANT TO LOGOUT</a>
-   
-    
+    <a href="#" style="text-decoration:none;" class="text-danger">DO YOU WANT TO LOGOUT  "<% out.println(session.getAttribute("username"));  %>"  </a>    
 </nav>
-		
-	<form action="Logout" method ="post">
+	<div id="box">	
+	<form action="Logout" method ="post" class="mt-5">
 <table align=center>		
-<tr><td colspan="2"><input type="submit" name="logout" value="LOGOUT" class="btn btn-danger mt-6 mb-6"><br></td></tr>
+<tr><td colspan="2"><input type="submit" name="logout" value="LOGOUT" class="btn btn-danger mb-5"><br></td></tr>
 </table>
 </form>
-		
+</div>
 </div>		
 </body>
 <div>

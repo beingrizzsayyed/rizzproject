@@ -30,6 +30,13 @@
 					out.print(request.getAttribute("Error"));
 					out.print("</font>");
 					}
+	
+	if(request.getAttribute("done")!=null)
+	{
+	out.print("<font size='4' color='green' m>");
+	out.print(request.getAttribute("done"));
+	out.print("</font>");
+	}
 	%>
 <table align=center class="mt-2">		
 <tr><td>USERNAME::<input type="text" name="uname" size="100" class="mb-4"></td><td></td></tr>

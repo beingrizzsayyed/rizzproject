@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 @WebServlet("/Sale")
@@ -39,7 +40,8 @@ public class Sale extends HttpServlet
 			out.println("<h4 align=\"center\">" +date.toString()+"</h4>");
 		try
 		{
-			     
+			HttpSession session= request.getSession(false);
+			String  user=(String)session.getAttribute("username");   
 			 party_code =Integer.parseInt(request.getParameter("party_code"));
 		     party_name =request.getParameter("party_name");
 			paddress =request.getParameter("paddress");
@@ -84,22 +86,23 @@ public class Sale extends HttpServlet
 				Class.forName("org.postgresql.Driver");
 			    Connection conn=DriverManager.getConnection(url,username,pass);
 			    Statement st= conn.createStatement();
-			    ResultSet rs1=st.executeQuery("SELECT bill_no FROM sale");
+			    ResultSet rs1=st.executeQuery("SELECT bill_no FROM sale where cust='"+user+"'");
 				while(rs1.next())
 					bill_no=rs1.getInt("bill_no");
 				bill_no=bill_no+1;
 			    
-			    ps1=conn.prepareStatement("insert into party values(?,?,?,?,?,?)");
+			    ps1=conn.prepareStatement("insert into party values(?,?,?,?,?,?,?)");
 			    ps1.setInt(1,bill_no);
 			    ps1.setInt(2,party_code);
 			    ps1.setString(3,party_name);
 			    ps1.setString(4,paddress);
 			    ps1.setString(5,pcontact);
 			    ps1.setString(6,current_location);
+			    ps1.setString(7,user);
 			    ps1.executeLargeUpdate();
 			    
 			    
-			    ps2=conn.prepareStatement("insert into sale values(?,?,?,?,?,?,?,?,?,?)");
+			    ps2=conn.prepareStatement("insert into sale values(?,?,?,?,?,?,?,?,?,?,?)");
 			    ps2.setInt(1,bill_no);
 			    ps2.setString(2,short_name);
 			    ps2.setString(3,item_name);
@@ -110,20 +113,22 @@ public class Sale extends HttpServlet
 			    ps2.setInt(8, advance);
 			    ps2.setInt(9,gt);
 			    ps2.setString(10,payment);
+			    ps2.setString(11,user);
 			    ps2.executeLargeUpdate();
 			
 			    Pdao pd=new Pdao();
-				if(pd.check(party_code))
+				if(pd.check(party_code,user))
 				{
 					System.out.println("do nothing");
 				}
 				else
 				{
-					ps3=conn.prepareStatement("insert into party_info values(?,?,?,?)");
+					ps3=conn.prepareStatement("insert into party_info values(?,?,?,?,?)");
 					ps3.setInt(1,party_code);
 				    ps3.setString(2,party_name);
 				    ps3.setString(3,paddress);
 				    ps3.setString(4,pcontact);
+				    ps3.setString(5,user);
 				    ps3.executeLargeUpdate();
 				}
 		}

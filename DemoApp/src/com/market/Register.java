@@ -36,27 +36,41 @@ public class Register extends HttpServlet
 			String add =request.getParameter("address");
 			String uname =request.getParameter("uname");
 			String pass =request.getParameter("pass");
+			String mail =request.getParameter("mail");
+			String contact =request.getParameter("contact");
 			
 		
 		String url="jdbc:postgresql://localhost:5432/market";
 		String username="postgres";
 		String passdb="rizz";
 		
-		ResultSet rs;
 		Class.forName("org.postgresql.Driver");
 	    Connection conn=DriverManager.getConnection(url,username,passdb);
-	    Statement st= conn.createStatement();
-	    PreparedStatement ps=conn.prepareStatement("insert into customer values(?,?,?,?,?)");
+	    Rdao dao=new Rdao();
+		if(dao.check(uname))
+		{
+			ServletContext sct= this.getServletContext();
+		    RequestDispatcher rd = sct.getRequestDispatcher("/register.jsp");
+		    request.setAttribute("Error","Sorry! Username already exist. Plz choose another username");
+			rd.forward(request, response);
+		}
+		else
+		{
+	    PreparedStatement ps=conn.prepareStatement("insert into customer values(?,?,?,?,?,?,?)");
 	    ps.setString(1,name);
 	    ps.setString(2,bname);
 	    ps.setString(3,add);
 	    ps.setString(4,uname);
 	    ps.setString(5,pass);
+	    ps.setString(6,mail);
+	    ps.setString(7,contact);
 	    ps.executeLargeUpdate();
 	    ServletContext sct= this.getServletContext();
 		RequestDispatcher rd = sct.getRequestDispatcher("/login.jsp");
+		request.setAttribute("done","register successful");
 		rd.forward(request, response);
 		}
+	}
 		catch(Exception e)
 		{
 			System.out.println(e);

@@ -1,9 +1,6 @@
 package com.market;
 
 import java.io.IOException;
-
-
-
 import java.util.*;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -38,13 +35,13 @@ public class Purchase extends HttpServlet {
 		int tm = 0,cf=0,gt=0; 
 		int item_code=0,quantity=0,sale_rate=0,frieght=0,carret=0;
 		 String item_name=null,payment=null;
-		
-		      Date date=new Date();
+		 
+		     Date date=new Date();
 			out.println("<h4 align=\"center\">" +date.toString()+"</h4>");
 		try
 		{
-			     
-			
+			HttpSession session= request.getSession(false);
+			String  user=(String)session.getAttribute("username");
 			 farmer_code =Integer.parseInt(request.getParameter("farmer_code"));
 		     farmer_name =request.getParameter("farmer_name");
 			address =request.getParameter("address");
@@ -76,20 +73,21 @@ public class Purchase extends HttpServlet {
 				Class.forName("org.postgresql.Driver");
 			    Connection conn=DriverManager.getConnection(url,username,pass);
 			    Statement st= conn.createStatement();
-			    ResultSet rs1=st.executeQuery("SELECT lable_no FROM purchase");
+			    ResultSet rs1=st.executeQuery("SELECT lable_no FROM purchase where cust='"+user+"'");
 				while(rs1.next())
 					lable_no=rs1.getInt("lable_no");
 				lable_no=lable_no+1;
 			    
-			    ps1=conn.prepareStatement("insert into farmer values(?,?,?,?,?)");
+			    ps1=conn.prepareStatement("insert into farmer values(?,?,?,?,?,?)");
 			    ps1.setInt(1,lable_no);
 			    ps1.setInt(2,farmer_code);
 			    ps1.setString(3,farmer_name);
 			    ps1.setString(4,address);
 			    ps1.setString(5,phone_no);
+			    ps1.setString(6,user);
 			    ps1.executeLargeUpdate();
 			    
-			    ps3=conn.prepareStatement("insert into purchase values(?,?,?,?,?,?,?,?,?,?,?)");
+			    ps3=conn.prepareStatement("insert into purchase values(?,?,?,?,?,?,?,?,?,?,?,?)");
 			    ps3.setInt(1,lable_no);
 			    ps3.setInt(2,item_code);
 			    ps3.setString(3,item_name);
@@ -101,20 +99,22 @@ public class Purchase extends HttpServlet {
 			    ps3.setInt(9,cf);
 			    ps3.setInt(10,gt);
 			    ps3.setString(11,payment);
+			    ps3.setString(12,user);
 			    ps3.executeLargeUpdate();
 			    
 			    Fdao fd=new Fdao();
-				if(fd.check(farmer_code))
+				if(fd.check(farmer_code,user))
 				{
 					System.out.println("do nothing");
 				}
 				else
 				{
-					ps4=conn.prepareStatement("insert into farmer_info values(?,?,?,?)");
+					ps4=conn.prepareStatement("insert into farmer_info values(?,?,?,?,?)");
 					ps4.setInt(1,farmer_code);
 				    ps4.setString(2,farmer_name);
 				    ps4.setString(3,address);
 				    ps4.setString(4,phone_no);
+				    ps4.setString(5,user);
 				    ps4.executeLargeUpdate();
 				}
 		}

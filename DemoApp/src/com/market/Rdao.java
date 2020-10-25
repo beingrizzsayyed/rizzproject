@@ -5,21 +5,21 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class Pdao
+public class Rdao
 {
+
 	String url="jdbc:postgresql://localhost:5432/market";
-	String use="postgres";
+	String user="postgres";
 	String passdb="rizz";
-	String sql="select * from party_info where party_code=? and cust=?";
-	public boolean check(int party_code,String user)
+	String sql="select * from customer where username=?";
+	public boolean check(String uname)
 	{
 		try
 		{
 			Class.forName("org.postgresql.Driver");
-			Connection conn=DriverManager.getConnection(url,use,passdb);
+			Connection conn=DriverManager.getConnection(url,user,passdb);
 			PreparedStatement ps=conn.prepareStatement(sql);
-			ps.setInt(1, party_code);
-			ps.setString(2, user);
+			ps.setString(1, uname);
 			ResultSet rs=ps.executeQuery();
 			if(rs.next())
 			{
@@ -34,4 +34,5 @@ public class Pdao
 		}
 		return false;
 	}
+	
 }

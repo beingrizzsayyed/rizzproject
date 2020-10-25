@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 @WebServlet("/Updemp")
@@ -30,6 +31,8 @@ public class Updemp extends HttpServlet {
 		String message;
 		try
 		{
+			HttpSession session= request.getSession(false);
+			String  user=(String)session.getAttribute("username");
 		String url="jdbc:postgresql://localhost:5432/market";
 		String username="postgres";
 		String pass="rizz";
@@ -38,7 +41,7 @@ public class Updemp extends HttpServlet {
 		Class.forName("org.postgresql.Driver");
 		Connection conn=DriverManager.getConnection(url,username,pass);
 		Statement st= conn.createStatement();
-		ps1=conn.prepareStatement("update employee set salary = '"+nsal+"' where e_id = "+eid+" ");
+		ps1=conn.prepareStatement("update employee set salary = '"+nsal+"' where e_id = "+eid+" and cust='"+user+"' ");
 		ps1.executeUpdate();
 		conn.close();
 		message= "UPDATE  SUCCESSFULL YOU CAN CHECK IN TABLES";

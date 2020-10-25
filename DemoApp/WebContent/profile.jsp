@@ -1,23 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+     <%@ page import="java.io.*" %>
+    <%@ page import="java.sql.*" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>SUB-MERCHANT  OUTSTANDING</title>
+<title> USER PROFILE</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
 <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 </head>
 <body>
-<% 
-response.setHeader("cache-control", "no-cache , no-store, must-revalidate");
-if(session.getAttribute("username")==null)
-{
-	response.sendRedirect("login.jsp");
-}
-%>
 <div id="outer">
-		<nav class="navbar navbar-expand-md navbar-dark bg-info">
+	<nav class="navbar navbar-expand-md navbar-dark bg-info">
     <a href="#" style="text-decoration:none;"" class="navbar-brand">TOMATTO BILLING SYSTEM</a>
     <div class="navbar-nav">
             <a href="#" class="nav-item nav-link active mr-5">HII <% out.println(session.getAttribute("username")); %></a>
@@ -47,24 +42,42 @@ if(session.getAttribute("username")==null)
             <a href="market1.jsp" class="nav-item nav-link active">HOME</a>
        </div></div>
 </nav>
-			
-<div id="box" class="mt-4 mb-4">
-<form action="vouts0.jsp" method="post" class="mt-4">
-<table>
-<tr><td>FIND SUB-MERCHANT BY NAME::</td><td><input type="text" name="search" size="30">::<input type="submit" name="find" value="FIND" class="btn btn-success"></td></tr>
-</table>
-</form>
-<br>
-<form action="vouts2.jsp" method="post">
-<table>
-<tr><td>FIND SUB-MERCHANT BY LABLE NUMBER::</td><td><input type="text" name="search" size="30">::<input type="submit" name="find" value="FIND" class="btn btn-success"></td></tr>
-</table>
-</form>
-<br>
-
-<form action="vouts1.jsp" method="post">
-SHOW ALL SUB-MERCHANT DATA::<input type="submit" name="show" value="SHOW" class="btn btn-success">
-</form>
+				
+<div  class="mt-4">
+<% 
+response.setHeader("cache-control", "no-cache , no-store, must-revalidate");
+if(session.getAttribute("username")==null)
+{
+	response.sendRedirect("login.jsp");
+}
+try
+{
+	String url="jdbc:postgresql://localhost:5432/market";
+	String username="postgres";
+	String pass="rizz";
+	PreparedStatement ps1,ps2;
+	ResultSet rs=null;
+	Class.forName("org.postgresql.Driver");
+	Connection conn=DriverManager.getConnection(url,username,pass);
+	Statement st= conn.createStatement();
+	rs=st.executeQuery("select name,buisness_name,address,username,mail_id,contact from customer where username='"+session.getAttribute("username")+"' ");
+	while(rs.next())
+	{
+	 out.println("<table>");
+	    out.println("<tr><td>NAME::</td><td>"+rs.getString(1)+"</td></tr>");
+	    out.println("<tr> <td>BUISNESS NAME::</td><td>"+rs.getString(2)+"</td></tr>");
+	    out.println("<tr> <td>ADDRESS::</td><td>"+rs.getString(3)+"</td></tr>");
+	    out.println("<tr> <td>USERNAME::</td><td>"+rs.getString(4)+"</td></tr>");
+	    out.println("<tr> <td>MAIL ID::</td><td>"+rs.getString(5)+"</td></tr>");
+	    out.println("<tr> <td>CONTACT::</td><td>"+rs.getString(6)+"</td></tr>");
+	    out.println("</table>");
+	}
+}
+catch(Exception e)
+{
+   System.out.println(e);
+}
+%>
 </div>
 </div>
 </body>

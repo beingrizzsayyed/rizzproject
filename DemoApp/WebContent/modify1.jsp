@@ -9,10 +9,20 @@
 <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 </head>
 <body>
-
+<% 
+response.setHeader("cache-control", "no-cache , no-store, must-revalidate");
+if(session.getAttribute("username")==null)
+{
+	response.sendRedirect("login.jsp");
+}
+%>
 <div id="outer">
 	<nav class="navbar navbar-expand-md navbar-dark bg-info">
     <a href="#" style="text-decoration:none;"" class="navbar-brand">TOMATTO BILLING SYSTEM</a>
+    <div class="navbar-nav">
+            <a href="#" class="nav-item nav-link active mr-5">HII <% out.println(session.getAttribute("username")); %></a>
+            <a href="profile.jsp" class="nav-item nav-link active mr-5">PROFILE</a>
+            </div>
     <div class="form-inline ml-auto">
             
             <a href="logout.jsp"><button type="submit" class="btn btn-danger">Logout</button></a>

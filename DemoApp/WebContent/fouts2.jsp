@@ -14,6 +14,10 @@
 <div id="outer">
 	<nav class="navbar navbar-expand-md navbar-dark bg-info">
     <a href="#" style="text-decoration:none;"" class="navbar-brand">TOMATTO BILLING SYSTEM</a>
+    <div class="navbar-nav">
+            <a href="#" class="nav-item nav-link active mr-5">HII <% out.println(session.getAttribute("username")); %></a>
+            <a href="profile.jsp" class="nav-item nav-link active mr-5">PROFILE</a>
+            </div>
     <div class="form-inline ml-auto">
             
             <a href="logout.jsp"><button type="submit" class="btn btn-danger">Logout</button></a>
@@ -50,6 +54,7 @@ if(session.getAttribute("username")==null)
 
 String n=request.getParameter("search");
 try{
+	String  user=(String)session.getAttribute("username");
 String url="jdbc:postgresql://localhost:5432/market";
 String username="postgres";
 String pass="rizz";
@@ -58,7 +63,7 @@ ResultSet rs=null;
 Class.forName("org.postgresql.Driver");
 Connection conn=DriverManager.getConnection(url,username,pass);
 Statement st= conn.createStatement();
-rs=st.executeQuery("select * from farmer where lable_no="+n+" ");
+rs=st.executeQuery("select * from farmer where lable_no="+n+" and cust='"+user+"'");
 out.println("<html>");
 out.println("<body>");
 out.println("<table border=10>");
@@ -78,7 +83,7 @@ while(rs.next())
 	out.println("<td>"+rs.getString(3)+"</td>");
 	out.println("<td>"+rs.getString(4)+"</td>");
 	out.println("<td>"+rs.getString(5)+"</td>");
-	out.println("<td>"+rs.getString(6)+"</td>");
+	out.println("<td>"+rs.getString(7)+"</td>");
 	out.println("</tr>");
 }
 out.println("</table></body></html>");
