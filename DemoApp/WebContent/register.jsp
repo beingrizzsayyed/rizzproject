@@ -35,7 +35,7 @@
 					<tr><td>ENTER BUISNESS NAME::</td><td><input type="text" name="bname"></td></tr>
 					<tr><td>ENTER ADDRESS::</td><td><input type="text" name="address"></td></tr>
 					<tr><td>ENTER USERNAME::</td><td><input type="text" name="uname"></td></tr>
-					<tr><td>ENTER PASSWORD::</td><td><input type="text" name="pass"></td></tr>
+					<tr><td>ENTER PASSWORD::</td><td><input type="password" name="pass"></td></tr>
 					<tr><td>MAIL ID::</td><td><input type="email" name="mail"></td></tr>
 					<tr><td>CONTACT::</td><td><input type="text" name="contact"></td></tr>
 					<tr><td></td><td><input type="submit" name="sign up" value="SIGN UP" class="btn btn-success mb-4"></td></tr>

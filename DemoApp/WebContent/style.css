@@ -124,7 +124,8 @@ ul {
 }
 
 #banner .captions h3 {
-	background: rgba(10,127,153,0.8);
+	background: rgba(0,0,0,0.7);
+	position: left;
 	color: #ffffff;
 	padding: 28px;
 	margin: 0;

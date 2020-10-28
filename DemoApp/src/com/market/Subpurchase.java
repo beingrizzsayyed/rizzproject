@@ -62,9 +62,9 @@ public class Subpurchase extends HttpServlet
 			gt=tm+cf;
 			
 			
-			 String url="jdbc:postgresql://localhost:5432/market";
-				String username="postgres";
-				String pass="rizz";
+			String url="jdbc:postgresql://ec2-34-232-24-202.compute-1.amazonaws.com:5432/d57qi02s5sp7ku";
+			String username="gbnmqdweltoxlt";
+			String pass="2ba8cf73627ddd6dc4896c09741005ea101fde5c9313f846e11250b767bc08be";
 				PreparedStatement ps1,ps3,ps4;
 				ResultSet rs=null;
 				Class.forName("org.postgresql.Driver");
@@ -99,28 +99,14 @@ public class Subpurchase extends HttpServlet
 			    ps3.setString(12,user);
 			    ps3.executeLargeUpdate();
 			    
-			    Fdao2 fd=new Fdao2();
-				if(fd.check(sub_code,user))
-				{
-					System.out.println("do nothing");
-				}
-				else
-				{
-					ps4=conn.prepareStatement("insert into sub_info values(?,?,?,?,?)");
-					ps4.setInt(1,sub_code);
-				    ps4.setString(2,name);
-				    ps4.setString(3,address);
-				    ps4.setString(4,phone_no);
-				    ps4.setString(5,user);
-				    ps4.executeLargeUpdate();
-				}
+			 
 		}
 		catch(Exception e)
 		{
 			System.out.println(e);
 		}
 		ServletContext sct= this.getServletContext();
-	    RequestDispatcher rd = sct.getRequestDispatcher("/purchase1.jsp");
+	    RequestDispatcher rd = sct.getRequestDispatcher("/purchase2.jsp");
 	    request.setAttribute("lable_no",lable_no);
 		request.setAttribute("item_name",item_name);
 		request.setAttribute("item_code",item_code);

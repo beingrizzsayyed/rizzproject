@@ -45,7 +45,6 @@ if(session.getAttribute("username")==null)
             <a href="farmer.jsp" class="nav-item nav-link">FARMER</a>
              <a href="submer.jsp" class="nav-item nav-link">SUB-MERCHANT</a>
              <a href="party.jsp" class="nav-item nav-link">PARTY</a>
-   
                 <a href="employee.jsp" class="nav-item nav-link">EMPLOYEES</a>
                 
         </div>

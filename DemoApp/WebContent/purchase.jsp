@@ -34,9 +34,17 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav">
             <a href="market1.jsp" class="nav-item nav-link active">HOME</a>
+            <a href="addfarmer.jsp" class="nav-item nav-link active">ADD FARMER</a>
        </div></div>
 </nav>
 <div class="text-primary mt-4">
+<%
+if(request.getAttribute("message")!=null)
+{
+out.print("<font size='4' color='green' m>");
+out.print(request.getAttribute("message"));
+out.print("</font>");
+}%>
 <% 
 response.setHeader("cache-control", "no-cache , no-store, must-revalidate");
 if(session.getAttribute("username")==null)
@@ -44,18 +52,22 @@ if(session.getAttribute("username")==null)
 	response.sendRedirect("login.jsp");
 }
 
+
 try 
 {
 	String  user=(String)session.getAttribute("username");
 	int lable_no=0;
+	String url="jdbc:postgresql://ec2-34-232-24-202.compute-1.amazonaws.com:5432/d57qi02s5sp7ku";
+	String username="gbnmqdweltoxlt";
+	String pass="2ba8cf73627ddd6dc4896c09741005ea101fde5c9313f846e11250b767bc08be";
 	Class.forName("org.postgresql.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/market", "postgres", "rizz");
+	Connection conn = DriverManager.getConnection(url,username,pass);
 	Statement st = conn.createStatement();
 	ResultSet rs=st.executeQuery("SELECT lable_no FROM purchase where cust='"+user+"'");
 	while(rs.next())
 		lable_no=rs.getInt("lable_no");
 	lable_no=lable_no+1;
-	out.println("LABLE NUMBER::::::"+lable_no);
+	out.println("\n LABLE NUMBER::::::"+lable_no);
 	
 }
 catch(Exception e)
@@ -63,6 +75,7 @@ catch(Exception e)
 	out.println(e);
 }
 %>
+
 </div>
 <form action="Purchase" method="post" class="mt-4">
 	<table>

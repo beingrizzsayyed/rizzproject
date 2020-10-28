@@ -40,9 +40,9 @@ public class Register extends HttpServlet
 			String contact =request.getParameter("contact");
 			
 		
-		String url="jdbc:postgresql://localhost:5432/market";
-		String username="postgres";
-		String passdb="rizz";
+			String url="jdbc:postgresql://ec2-34-232-24-202.compute-1.amazonaws.com:5432/d57qi02s5sp7ku";
+			String username="gbnmqdweltoxlt";
+			String passdb="2ba8cf73627ddd6dc4896c09741005ea101fde5c9313f846e11250b767bc08be";
 		
 		Class.forName("org.postgresql.Driver");
 	    Connection conn=DriverManager.getConnection(url,username,passdb);

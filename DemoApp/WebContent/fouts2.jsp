@@ -55,9 +55,9 @@ if(session.getAttribute("username")==null)
 String n=request.getParameter("search");
 try{
 	String  user=(String)session.getAttribute("username");
-String url="jdbc:postgresql://localhost:5432/market";
-String username="postgres";
-String pass="rizz";
+	String url="jdbc:postgresql://ec2-34-232-24-202.compute-1.amazonaws.com:5432/d57qi02s5sp7ku";
+	String username="gbnmqdweltoxlt";
+	String pass="2ba8cf73627ddd6dc4896c09741005ea101fde5c9313f846e11250b767bc08be";
 PreparedStatement ps1,ps2;
 ResultSet rs=null;
 Class.forName("org.postgresql.Driver");
@@ -66,7 +66,7 @@ Statement st= conn.createStatement();
 rs=st.executeQuery("select * from farmer where lable_no="+n+" and cust='"+user+"'");
 out.println("<html>");
 out.println("<body>");
-out.println("<table border=10>");
+out.println("<table border=3>");
 out.println("<tr> ");
 out.println("<td>LABLE NUMBER</td>");
 out.println("<td>FARMER CODE</td>");

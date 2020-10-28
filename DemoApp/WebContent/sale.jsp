@@ -34,6 +34,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav">
             <a href="market1.jsp" class="nav-item nav-link active">HOME</a>
+            <a href="addparty.jsp" class="nav-item nav-link active">ADD PARTY</a>
        </div></div>
 </nav>
 <div class="text-primary mt-4">
@@ -43,12 +44,24 @@ if(session.getAttribute("username")==null)
 {
 	response.sendRedirect("login.jsp");
 }
+
+if(request.getAttribute("message")!=null)
+{
+out.print("<font size='4' color='green' m>");
+out.print(request.getAttribute("message"));
+out.print("</font>");
+}
+
+
 try 
 {
 	String  user=(String)session.getAttribute("username");
 	int bill_no=0;
+	String url="jdbc:postgresql://ec2-34-232-24-202.compute-1.amazonaws.com:5432/d57qi02s5sp7ku";
+	String username="gbnmqdweltoxlt";
+	String pass="2ba8cf73627ddd6dc4896c09741005ea101fde5c9313f846e11250b767bc08be";
 	Class.forName("org.postgresql.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/market", "postgres", "rizz");
+	Connection conn = DriverManager.getConnection(url,username,pass);
 	Statement st = conn.createStatement();
 	ResultSet rs=st.executeQuery("SELECT bill_no FROM sale where cust='"+user+"'");
 	while(rs.next())

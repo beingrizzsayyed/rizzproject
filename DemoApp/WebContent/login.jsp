@@ -11,7 +11,11 @@
 <body>
 <div id="outer">
  <nav class="navbar navbar-expand-md navbar-dark bg-info">
-    <a href="#" style="text-decoration:none;"" class="navbar-brand">TOMATTO BILLING SYSTEM</a> 
+    <a href="#" style="text-decoration:none;"" class="navbar-brand">TOMATTO BILLING SYSTEM</a>
+    <div class="form-inline ml-auto">
+            
+            <a href="admin.jsp"><button type="submit" class="btn btn-success">ADMIN LOGIN</button></a>
+        </div> 
 </nav>	
 		
 		<div id="banner">

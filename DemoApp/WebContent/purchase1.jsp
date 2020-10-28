@@ -58,6 +58,7 @@ if(session.getAttribute("username")==null)
 {
 	response.sendRedirect("login.jsp");
 }
+out.println(request.getAttribute("c"));
 %>
 		<center>
 		<div id='DivIdToPrint'>

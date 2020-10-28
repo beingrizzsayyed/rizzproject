@@ -53,16 +53,16 @@ if(session.getAttribute("username")==null)
 try
 {
 	String  user=(String)session.getAttribute("username");
-	String url="jdbc:postgresql://localhost:5432/market";
-	String username="postgres";
-	String pass="rizz";
+	String url="jdbc:postgresql://ec2-34-232-24-202.compute-1.amazonaws.com:5432/d57qi02s5sp7ku";
+	String username="gbnmqdweltoxlt";
+	String pass="2ba8cf73627ddd6dc4896c09741005ea101fde5c9313f846e11250b767bc08be";
 	PreparedStatement ps1,ps2;
 	ResultSet rs=null;
 	Class.forName("org.postgresql.Driver");
 	Connection conn=DriverManager.getConnection(url,username,pass);
 	Statement st= conn.createStatement();
 	rs=st.executeQuery("select * from sale where date=CURRENT_DATE and cust='"+user+"' ");
-    out.println("<table border=10>");
+    out.println("<table border=3>");
     out.println("<tr> ");
     out.println("<td>BILL NUMBER</td>");
     out.println("<td>SHORT NAME</td>");

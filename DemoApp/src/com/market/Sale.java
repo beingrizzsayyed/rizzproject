@@ -78,9 +78,9 @@ public class Sale extends HttpServlet
 			vr=tm-advance;
 			gt=vr+rent;
 			 
-			 String url="jdbc:postgresql://localhost:5432/market";
-				String username="postgres";
-				String pass="rizz";
+			String url="jdbc:postgresql://ec2-34-232-24-202.compute-1.amazonaws.com:5432/d57qi02s5sp7ku";
+			String username="gbnmqdweltoxlt";
+			String pass="2ba8cf73627ddd6dc4896c09741005ea101fde5c9313f846e11250b767bc08be";
 				PreparedStatement ps1,ps2,ps3;
 				ResultSet rs=null;
 				Class.forName("org.postgresql.Driver");
@@ -116,21 +116,7 @@ public class Sale extends HttpServlet
 			    ps2.setString(11,user);
 			    ps2.executeLargeUpdate();
 			
-			    Pdao pd=new Pdao();
-				if(pd.check(party_code,user))
-				{
-					System.out.println("do nothing");
-				}
-				else
-				{
-					ps3=conn.prepareStatement("insert into party_info values(?,?,?,?,?)");
-					ps3.setInt(1,party_code);
-				    ps3.setString(2,party_name);
-				    ps3.setString(3,paddress);
-				    ps3.setString(4,pcontact);
-				    ps3.setString(5,user);
-				    ps3.executeLargeUpdate();
-				}
+			 
 		}
 		
 		catch(Exception e)
