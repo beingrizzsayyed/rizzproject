@@ -29,7 +29,6 @@ public class Register extends HttpServlet
 		try
 		{
 			response.setContentType("text/html");
-			PrintWriter out = response.getWriter();
 			
 			String name =request.getParameter("name");
 			String bname =request.getParameter("bname");
@@ -46,8 +45,11 @@ public class Register extends HttpServlet
 		
 		Class.forName("org.postgresql.Driver");
 	    Connection conn=DriverManager.getConnection(url,username,passdb);
-	    Rdao dao=new Rdao();
-		if(dao.check(uname))
+	    String sql="select * from customer where username=?";
+	    PreparedStatement ps1=conn.prepareStatement(sql);
+		ps1.setString(1, uname);
+		ResultSet rs=ps1.executeQuery();
+		if(rs.next())
 		{
 			ServletContext sct= this.getServletContext();
 		    RequestDispatcher rd = sct.getRequestDispatcher("/register.jsp");
